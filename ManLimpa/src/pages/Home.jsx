@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div>
       <h1>Bem-vindo ao ManLimpa!</h1>
-      <p>Este é o conteúdo da página inicial.</p>
+      <p>Este é o conteúdo da página GESTAO DE RESISUOS.</p>
     </div>
   );
 };

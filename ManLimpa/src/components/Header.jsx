@@ -9,7 +9,7 @@ const Header = () => {
         <Link to="/">LOGO - MANLIMPA</Link>
       </div>
       <nav className="nav-links">
-        <Link to="/">HOME</Link>
+        <Link to="/">GESTÃO DE RESÍDUOS</Link>
         <Link to="/coleta">PONTOS DE COLETA</Link>
         <Link to="/denuncia">DENÚNCIAS</Link>
         <Link to="/educacao">EDUCAÇÃO</Link>
