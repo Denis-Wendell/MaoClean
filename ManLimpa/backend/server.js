@@ -3,8 +3,10 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { testConnection } = require('./config/db');
-const dialogflow = require('@google-cloud/dialogflow'); // Nova biblioteca
-const { v4: uuidv4 } = require('uuid'); // Para gerar IDs de sessão únicos
+const dialogflow = require('@google-cloud/dialogflow');
+const { v4: uuidv4 } = require('uuid');
+// NOVO: Importa a biblioteca auxiliar para o Fulfillment
+const { WebhookClient } = require('dialogflow-fulfillment');
 
 // Importar rotas
 const denunciasRoutes = require('./routes/denuncias');
@@ -24,7 +26,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 })();
 
 // --- CONFIGURAÇÃO DO DIALOGFLOW ---
-// Valida se as variáveis de ambiente necessárias foram configuradas
 if (!process.env.GOOGLE_PROJECT_ID) {
     console.error("ERRO: A variável de ambiente GOOGLE_PROJECT_ID não foi encontrada no arquivo .env");
     process.exit(1);
@@ -35,6 +36,7 @@ if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
 }
 
 const projectId = process.env.GOOGLE_PROJECT_ID;
+// Mantemos o sessionClient para as requisições que vêm do frontend
 const sessionClient = new dialogflow.SessionsClient();
 // --- FIM DA CONFIGURAÇÃO DO DIALOGFLOW ---
 
@@ -43,10 +45,38 @@ const sessionClient = new dialogflow.SessionsClient();
 app.use('/api/denuncias', denunciasRoutes);
 app.use('/api/tipos-residuo', tiposResiduoRoutes);
 
-// Rota do Chatbot atualizada para o Dialogflow
+// Rota do Chatbot ATUALIZADA para lidar com o Frontend E com o Webhook do Dialogflow
 app.post('/api/chatbot', async (req, res) => {
-    // Para o Dialogflow, cada conversa precisa de um ID de sessão único.
-    // Vamos usar o que vem do front-end ou criar um novo.
+
+  // Lógica para o Webhook do Dialogflow (Fulfillment)
+  // O Dialogflow envia um corpo de requisição com a propriedade 'queryResult'
+  if (req.body.queryResult) {
+    console.log('>> Requisição recebida do Webhook do Dialogflow');
+    
+    const agent = new WebhookClient({ request: req, response: res });
+
+    // Função que será chamada quando a intenção 'EncontrarPontoColeta - custom' for acionada
+    function encontrarPontoColeta(agent) {
+        const material = agent.parameters['tipo-residuo'];
+        const bairro = agent.parameters['geo-city'];
+
+        // AQUI VOCÊ COLOCARIA A LÓGICA PARA BUSCAR NO SEU BANCO DE DADOS
+        // Por enquanto, vamos usar uma resposta de exemplo:
+        const enderecoDoBanco = `Supermercado Teste na Av. Djalma Batista, bairro ${bairro}`;
+
+        agent.add(`Ótima notícia! Encontrei um ponto de coleta para ${material} no bairro ${bairro}: ${enderecoDoBanco}.`);
+    }
+
+    // Mapeia as intenções do Dialogflow para as funções do seu código
+    let intentMap = new Map();
+    // O nome aqui deve ser EXATAMENTE o nome da sua intenção no Dialogflow
+    intentMap.set('EncontrarPontoColeta - custom', encontrarPontoColeta); 
+    agent.handleRequest(intentMap);
+
+  } else {
+    // Lógica para requisições que vêm do seu Frontend
+    console.log('>> Requisição recebida do cliente Frontend');
+    
     const sessionId = req.body.sessionId || uuidv4();
     const { message } = req.body;
 
@@ -64,11 +94,8 @@ app.post('/api/chatbot', async (req, res) => {
 
     try {
         const responses = await sessionClient.detectIntent(request);
-        console.log('Resposta do Dialogflow:', JSON.stringify(responses, null, 2));
-        
         const result = responses[0].queryResult;
         
-        // Retorna a resposta de texto e o ID da sessão para o front-end manter a conversa
         res.json({ 
             reply: result.fulfillmentText,
             sessionId: sessionId 
@@ -78,6 +105,7 @@ app.post('/api/chatbot', async (req, res) => {
         console.error('ERRO na API do Dialogflow:', error);
         res.status(500).json({ error: 'Desculpe, não consegui processar sua mensagem.' });
     }
+  }
 });
 
 
