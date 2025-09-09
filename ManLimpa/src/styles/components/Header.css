@@ -1,0 +1,118 @@
+/* Header geral */
+.header {
+  background-color: #05400A; /* verde escuro */
+  padding: 0px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+.logo-image {
+  width: 90px;
+  height: 60px;
+}
+
+
+
+/* Navegação */
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+/* Link ativo */
+.nav-links a.active {
+  background-color: #FAA61A;
+  color: #05400A;
+}
+
+/* Efeito hover */
+.nav-links a:hover {
+  color: #FAA61A;
+}
+
+.nav-links a.active:hover {
+  color: #05400A;
+  background-color: #fbbf4d;
+}
+
+/* Menu Mobile */
+.menu-toggle {
+  display: none;
+}
+
+.menu-button {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.menu-button span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: white;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .menu-button {
+    display: flex;
+  }
+  
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #05400A;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    gap: 15px;
+    transform: translateY(-150%);
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+  
+  .menu-toggle:checked ~ .nav-links {
+    transform: translateY(0);
+  }
+  
+  .menu-toggle:checked + .menu-button span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+  
+  .menu-toggle:checked + .menu-button span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .menu-toggle:checked + .menu-button span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+  
+  .nav-links a {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+}

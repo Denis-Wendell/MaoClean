@@ -1,0 +1,202 @@
+.formulario-container {
+  background-color: #ffffff;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Barra laranja */
+.barra-laranja {
+  background-color: #f59e0b;
+  height: 10px;
+  width: 100%;
+}
+
+/* Título principal */
+.titulo-container {
+  padding: 16px 24px;
+}
+
+.titulo-principal {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: left;
+  margin: 0;
+  color: #333333;
+  text-transform: uppercase;
+}
+
+/* Formulário interno */
+.formulario-interno {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  margin: 0 24px 24px;
+  padding: 16px;
+}
+
+/* Títulos das seções */
+.secao-titulo {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #333333;
+}
+
+/* Layout dos campos */
+.campos-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.campo-grupo {
+  flex: 1;
+  min-width: 200px;
+  padding: 0 10px;
+  margin-bottom: 16px;
+}
+
+/* Labels */
+.campo-label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #333333;
+}
+
+/* Inputs - Aplicando estilos uniformes para todos os tipos */
+.campo-input, 
+.campo-textarea,
+select.campo-input,
+input[type="file"].campo-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #363636;
+  border-radius: 4px;
+  background-color: #ffffff;
+  font-size: 14px;
+  color: #333333;
+  box-sizing: border-box; /* Garante que padding e border sejam incluídos no tamanho total */
+  height: auto;
+  min-height: 40px; /* Define uma altura mínima consistente */
+  -webkit-appearance: none; /* Remove estilos padrão do navegador no Safari */
+  -moz-appearance: none; /* Remove estilos padrão do navegador no Firefox */
+  appearance: none; /* Remove estilos padrão do navegador */
+}
+
+/* Estilos específicos para select */
+select.campo-input {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  padding-right: 32px; /* Espaço para a seta */
+}
+
+/* Estilos específicos para input de arquivo */
+input[type="file"].campo-input {
+  padding: 6px 8px; /* Padding ligeiramente menor para compensar o botão interno */
+  height: 40px; /* Altura fixa para consistência */
+  line-height: normal;
+}
+
+/* Personalização do botão de arquivo */
+input[type="file"].campo-input::-webkit-file-upload-button {
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-right: 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+input[type="file"].campo-input::-webkit-file-upload-button:hover {
+  background-color: #e5e7eb;
+}
+
+/* Textarea específico */
+.campo-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Estados de foco para todos os campos */
+.campo-input:focus, 
+.campo-textarea:focus,
+select.campo-input:focus,
+input[type="file"].campo-input:focus {
+  outline: none;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+/* Botão de enviar */
+.botao-container {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.botao-enviar {
+  background-color: #f59e0b;
+  color: #ffffff;
+  font-weight: 500;
+  padding: 8px 40px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.botao-enviar:hover {
+  background-color: #d97706;
+}
+
+.botao-enviar:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Mensagens de status */
+.mensagem {
+  padding: 12px;
+  margin: 16px 24px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.mensagem.sucesso {
+  background-color: #d1fae5;
+  border: 1px solid #10b981;
+  color: #065f46;
+}
+
+.mensagem.erro {
+  background-color: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #991b1b;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .formulario-container {
+    max-width: 95%;
+  }
+  
+  .campos-row {
+    flex-direction: column;
+  }
+  
+  .campo-grupo {
+    padding: 0;
+    min-width: auto;
+  }
+  
+  .titulo-principal {
+    font-size: 16px;
+  }
+}

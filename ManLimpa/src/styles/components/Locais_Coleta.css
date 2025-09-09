@@ -1,0 +1,106 @@
+/* Estilos para o componente MapaETexto simplificado */
+
+/* Container principal que contém texto e mapa */
+.mapa-texto-container {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  padding: 15px;
+  max-width: 1350px;
+  margin: 0 auto;
+}
+
+/* Seção de texto */
+.secao-texto {
+  flex: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  
+}
+
+.secao-texto h2 {
+  color: #2c8c3c;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.secao-texto h3 {
+  color: #2c8c3c;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.texto-introducao {
+  line-height: 1.6;
+  margin-bottom: 15px;
+  color: #333333;
+}
+
+.info-dicas ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.info-dicas li {
+  margin-bottom: 8px;
+  color: #333333;
+}
+
+/* Seção do mapa */
+.secao-mapa {
+  flex: 1;
+  height: 600px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+ 
+}
+
+/* Iframe do mapa */
+.mapa-iframe {
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsividade */
+@media (min-width: 768px) {
+  .mapa-texto-container {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  
+  .secao-texto {
+    width: 35%;
+  }
+  
+  .secao-mapa {
+    width: 65%;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* Estilos específicos para telas pequenas */
+@media (max-width: 767px) {
+  .secao-texto {
+    padding: 15px;
+  }
+  
+  .secao-mapa {
+    height: 1px;
+  }
+}
+.secao-mapa h1 {
+    background-color: #f9f9f9;
+    color: #2c8c3c;
+    font-size: 2rem;
+    font-weight: bold;
+    border-bottom:2px solid #2c8c3c;
+    justify-content: center;
+    text-align: center;
+}
