@@ -13,12 +13,13 @@ const Header = () => {
   return (
     <header className="header">
       <div className="logo">
-        <img 
-          src="./assets/logo.png"  // ← Use como URL, não import
-          alt="Logo" 
-          className="logo-image"
-        />
-        
+        <Link to="/">
+          <img
+            src="./assets/logo.png"  // ← Use como URL, não import
+            alt="Logo"
+            className="logo-image"
+          />
+        </Link>
       </div>
       
       {/* Botão do menu mobile */}
