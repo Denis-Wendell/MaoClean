@@ -3,10 +3,10 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { testConnection } = require('./config/db');
-const dialogflow = require('@google-cloud/dialogflow');
-const { v4: uuidv4 } = require('uuid');
+// const dialogflow = require('@google-cloud/dialogflow');
+// const { v4: uuidv4 } = require('uuid');
 // NOVO: Importa a biblioteca auxiliar para o Fulfillment
-const { WebhookClient } = require('dialogflow-fulfillment');
+// const { WebhookClient } = require('dialogflow-fulfillment');
 
 // Importar rotas
 const denunciasRoutes = require('./routes/denuncias');
