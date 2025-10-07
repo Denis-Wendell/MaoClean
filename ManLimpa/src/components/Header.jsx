@@ -14,7 +14,7 @@ const Header = () => {
     <header className="header">
       <div className="logo">
         <img 
-          src="./assets/logo1.png"  // ← Use como URL, não import
+          src="./assets/logo.png"  // ← Use como URL, não import
           alt="Logo" 
           className="logo-image"
         />
@@ -33,7 +33,7 @@ const Header = () => {
         <Link to="/" className={isActive('/')}>GESTÃO DE RESÍDUOS</Link>
         <Link to="/coleta" className={isActive('/coleta')}>PONTOS DE COLETA</Link>
         <Link to="/educacao" className={isActive('/educacao')}>EDUCAÇÃO</Link>
-        <Link to="/denuncia" className={isActive('/denuncia')}>DENÚNCIAS</Link>
+        <Link to="/denuncia" className={isActive('/denuncia')}>DENUNCIE</Link>
       </nav>
     </header>
   );

@@ -1,6 +1,6 @@
 footer {
-  background-color: #05400A; /* Verde escuro */
-  padding:15px 20px;
+  background-color: #05400acf; /* Verde escuro */
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,7 +8,8 @@ footer {
   left: 0;
   width: 100%;
   color: white;
-  margin-top: auto;
+  box-shadow: var(--shadow-lg);
+  transform: translateZ(0);
 }
 
 .footer-text {

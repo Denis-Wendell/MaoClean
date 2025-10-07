@@ -1,0 +1,60 @@
+:root {
+  /* Cores principais */
+  --primary-green: #1a8754;
+  --secondary-green: #25b06b;
+  --accent-green: #34d384;
+  --dark-green: #146c43;
+  --light-green: #e6f4ea;
+  
+  /* Cores de destaque */
+  --accent-orange: #f59e0b;
+  --accent-blue: #3b82f6;
+  --accent-red: #ef4444;
+  --accent-yellow: #fbbf24;
+  
+  /* Tons neutros */
+  --white: #ffffff;
+  --light-bg: #f8f9fa;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  
+  /* Sombras */
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+  --shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
+  
+  /* Transições */
+  --transition-fast: all 0.2s ease;
+  --transition: all 0.3s ease;
+  --transition-slow: all 0.4s ease;
+  
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  
+  /* Espaçamento */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  
+  /* Typography */
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+}
