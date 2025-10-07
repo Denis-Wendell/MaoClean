@@ -2,11 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { testConnection } = require('./config/db');
-// const dialogflow = require('@google-cloud/dialogflow');
-// const { v4: uuidv4 } = require('uuid');
-// NOVO: Importa a biblioteca auxiliar para o Fulfillment
-// const { WebhookClient } = require('dialogflow-fulfillment');
+// Garante que a conexão com o banco (pool) é importada para fazer consultas
+const { testConnection, pool } = require('./config/db'); 
+const OpenAI = require('openai');
 
 // Importar rotas
 const denunciasRoutes = require('./routes/denuncias');
@@ -25,87 +23,91 @@ app.use(bodyParser.urlencoded({ extended: true }));
   await testConnection();
 })();
 
-// --- CONFIGURAÇÃO DO DIALOGFLOW ---
-if (!process.env.GOOGLE_PROJECT_ID) {
-    console.error("ERRO: A variável de ambiente GOOGLE_PROJECT_ID não foi encontrada no arquivo .env");
+// --- CONFIGURAÇÃO DA OPENAI ---
+if (!process.env.OPENAI_API_KEY) {
+    console.error("ERRO: A variável de ambiente OPENAI_API_KEY não foi encontrada no arquivo .env");
     process.exit(1);
 }
-if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-    console.error("ERRO: A variável de ambiente GOOGLE_APPLICATION_CREDENTIALS não foi encontrada no arquivo .env");
-    process.exit(1);
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
+
+// A instrução base para o bot, agora mais organizada
+let systemInstruction = `
+    # PERFIL E OBJETIVO
+    - Você é o "RecicloBot", um assistente virtual amigável e especialista do site "Mao Clean".
+    - Sua missão é ajudar os usuários com dúvidas sobre descarte e coleta de resíduos recicláveis na cidade de Manaus, Amazonas.
+
+    # REGRAS PRINCIPAIS
+    1.  **USE A LISTA DE DADOS:** Responda a perguntas sobre locais de coleta usando **EXCLUSIVAMENTE** a lista de "Pontos de Coleta Conhecidos" fornecida no final deste prompt. Não invente informações ou endereços.
+    2.  **SEJA PRECISO:** Se a lista não contiver um ponto de coleta para o material ou bairro solicitado, informe claramente que não encontrou um local com essas especificações.
+    3.  **MANTENHA O FOCO:** Suas respostas devem ser estritamente sobre reciclagem, sustentabilidade, pontos de coleta e meio ambiente.
+    4.  **LIDAR COM PERGUNTAS FORA DO TEMA:** Se o usuário perguntar sobre qualquer outro assunto (esportes, política, etc.), recuse educadamente com uma mensagem como: "Desculpe, só posso ajudar com questões relacionadas à reciclagem e ao descarte correto de resíduos."
+
+    # TOM DE VOZ
+    - Amigável
+    - Didático
+    - Objetivo
+`;
+
+// Função para carregar os pontos de coleta e injetar nas instruções
+async function initializeSystemPrompt() {
+    try {
+        console.log('Carregando pontos de coleta do banco de dados...');
+        const [rows] = await pool.query('SELECT * FROM pontos_coleta');
+
+        if (rows.length > 0) {
+            const pointsList = rows.map(p =>
+                `- Nome: ${p.nome}, Bairro: ${p.bairro}, Endereço: ${p.endereco}, Aceita: ${p.tipos_residuos_aceitos}`
+            ).join('\n');
+
+            systemInstruction += `\n\n### Pontos de Coleta Conhecidos:\n${pointsList}`;
+            console.log('Pontos de coleta carregados e adicionados às instruções do sistema com sucesso!');
+        } else {
+            console.warn('AVISO: Nenhum ponto de coleta encontrado no banco de dados.');
+        }
+    } catch (error) {
+        console.error("ERRO ao carregar pontos de coleta do banco de dados:", error);
+    }
 }
 
-const projectId = process.env.GOOGLE_PROJECT_ID;
-// Mantemos o sessionClient para as requisições que vêm do frontend
-const sessionClient = new dialogflow.SessionsClient();
-// --- FIM DA CONFIGURAÇÃO DO DIALOGFLOW ---
+// Inicia a função ao ligar o servidor
+initializeSystemPrompt();
+// --- FIM DA CONFIGURAÇÃO DA OPENAI ---
 
 
 // Rotas
 app.use('/api/denuncias', denunciasRoutes);
 app.use('/api/tipos-residuo', tiposResiduoRoutes);
 
-// Rota do Chatbot ATUALIZADA para lidar com o Frontend E com o Webhook do Dialogflow
+// Rota do Chatbot atualizada para a OPENAI
 app.post('/api/chatbot', async (req, res) => {
-
-  // Lógica para o Webhook do Dialogflow (Fulfillment)
-  // O Dialogflow envia um corpo de requisição com a propriedade 'queryResult'
-  if (req.body.queryResult) {
-    console.log('>> Requisição recebida do Webhook do Dialogflow');
-    
-    const agent = new WebhookClient({ request: req, response: res });
-
-    // Função que será chamada quando a intenção 'EncontrarPontoColeta - custom' for acionada
-    function encontrarPontoColeta(agent) {
-        const material = agent.parameters['tipo-residuo'];
-        const bairro = agent.parameters['geo-city'];
-
-        // AQUI VOCÊ COLOCARIA A LÓGICA PARA BUSCAR NO SEU BANCO DE DADOS
-        // Por enquanto, vamos usar uma resposta de exemplo:
-        const enderecoDoBanco = `Supermercado Teste na Av. Djalma Batista, bairro ${bairro}`;
-
-        agent.add(`Ótima notícia! Encontrei um ponto de coleta para ${material} no bairro ${bairro}: ${enderecoDoBanco}.`);
-    }
-
-    // Mapeia as intenções do Dialogflow para as funções do seu código
-    let intentMap = new Map();
-    // O nome aqui deve ser EXATAMENTE o nome da sua intenção no Dialogflow
-    intentMap.set('EncontrarPontoColeta - custom', encontrarPontoColeta); 
-    agent.handleRequest(intentMap);
-
-  } else {
-    // Lógica para requisições que vêm do seu Frontend
-    console.log('>> Requisição recebida do cliente Frontend');
-    
-    const sessionId = req.body.sessionId || uuidv4();
-    const { message } = req.body;
-
-    const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
-
-    const request = {
-        session: sessionPath,
-        queryInput: {
-            text: {
-                text: message,
-                languageCode: 'pt-BR',
-            },
-        },
-    };
-
     try {
-        const responses = await sessionClient.detectIntent(request);
-        const result = responses[0].queryResult;
-        
-        res.json({ 
-            reply: result.fulfillmentText,
-            sessionId: sessionId 
+        const { message, history } = req.body;
+
+        const messages = [
+            { role: "system", content: systemInstruction },
+            ...(history || []).map(msg => ({
+                role: msg.role === 'model' ? 'assistant' : 'user',
+                content: msg.parts[0].text
+            })),
+            { role: "user", content: message }
+        ];
+
+        const completion = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo",
+            messages: messages,
+            max_tokens: 250,
         });
 
+        const reply = completion.choices[0].message.content;
+
+        res.json({ reply: reply });
+
     } catch (error) {
-        console.error('ERRO na API do Dialogflow:', error);
+        console.error('ERRO na API da OpenAI:', error);
         res.status(500).json({ error: 'Desculpe, não consegui processar sua mensagem.' });
     }
-  }
 });
 
 
@@ -120,3 +122,4 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+
