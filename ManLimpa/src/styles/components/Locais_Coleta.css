@@ -1,106 +1,171 @@
-/* Estilos para o componente MapaETexto simplificado */
+@import '../base/variables.css';
 
-/* Container principal que contém texto e mapa */
+/* Container principal */
 .mapa-texto-container {
-  display: flex;
-  flex-direction: column;
-  gap: 35px;
-  padding: 15px;
-  max-width: 1350px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 3rem auto;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 /* Seção de texto */
 .secao-texto {
-  flex: 1;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  
+  padding: 2rem;
+  background: linear-gradient(135deg, #f8fef9 0%, #ffffff 100%);
+  border-radius: 12px;
+  border-left: 4px solid var(--primary-green);
 }
 
 .secao-texto h2 {
-  color: #2c8c3c;
-  margin-bottom: 15px;
-  font-size: 24px;
-  font-weight: bold;
+  color: var(--primary-green);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
 }
 
 .secao-texto h3 {
   color: #2c8c3c;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
 .texto-introducao {
-  line-height: 1.6;
-  margin-bottom: 15px;
-  color: #333333;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 1.5rem;
 }
 
 .info-dicas ul {
-  padding-left: 20px;
-  margin-top: 10px;
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
 }
 
 .info-dicas li {
-  margin-bottom: 8px;
-  color: #333333;
+  padding: 0.7rem 0;
+  padding-left: 1.8rem;
+  color: #444;
+  line-height: 1.6;
+  position: relative;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.info-dicas li:last-child {
+  border-bottom: none;
+}
+
+.info-dicas li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--primary-green);
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 /* Seção do mapa */
 .secao-mapa {
-  flex: 1;
-  height: 600px;
   position: relative;
-  border-radius: 8px;
+  border-radius: 15px;
   overflow: hidden;
- 
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  background: #f5f5f5;
+}
+
+.secao-mapa h1 {
+  background: linear-gradient(135deg, var(--primary-green) 0%, #2c8c3c 100%);
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 700;
+  padding: 1.2rem;
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.5px;
 }
 
 /* Iframe do mapa */
 .mapa-iframe {
   border: none;
   width: 100%;
-  height: 100%;
+  height: 500px;
+  display: block;
 }
 
-/* Responsividade */
-@media (min-width: 768px) {
+/* Layout desktop */
+@media (min-width: 992px) {
   .mapa-texto-container {
-    flex-direction: row;
-    align-items: stretch;
+    grid-template-columns: 380px 1fr;
+    gap: 2.5rem;
+    padding: 3rem;
   }
-  
-  .secao-texto {
-    width: 35%;
+
+  .secao-mapa h1 {
+    font-size: 1.8rem;
   }
-  
-  .secao-mapa {
-    width: 65%;
-    justify-content: center;
-    align-items: center;
+
+  .mapa-iframe {
+    height: 1108px;
   }
 }
 
-/* Estilos específicos para telas pequenas */
-@media (max-width: 767px) {
-  .secao-texto {
-    padding: 15px;
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991px) {
+  .mapa-texto-container {
+    padding: 2.5rem;
   }
-  
-  .secao-mapa {
-    height: 1px;
+
+  .secao-texto h2 {
+    font-size: 1.8rem;
+  }
+
+  .mapa-iframe {
+    height: 500px;
   }
 }
-.secao-mapa h1 {
-    background-color: #f9f9f9;
-    color: #2c8c3c;
-    font-size: 2rem;
-    font-weight: bold;
-    border-bottom:2px solid #2c8c3c;
-    justify-content: center;
-    text-align: center;
+
+/* Mobile */
+@media (max-width: 767px) {
+  .mapa-texto-container {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+    gap: 1.5rem;
+  }
+
+  .secao-texto {
+    padding: 1.5rem;
+  }
+
+  .secao-texto h2 {
+    font-size: 1.6rem;
+  }
+
+  .secao-texto h3 {
+    font-size: 1.2rem;
+  }
+
+  .texto-introducao {
+    font-size: 1rem;
+  }
+
+  .secao-mapa h1 {
+    font-size: 1.3rem;
+    padding: 1rem;
+  }
+
+  .mapa-iframe {
+    height: 400px;
+  }
+
+  .info-dicas li {
+    font-size: 0.95rem;
+  }
 }

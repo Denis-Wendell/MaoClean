@@ -62,17 +62,15 @@ const ImageCarousel = () => {
           🌱<strong>MaoClean</strong>🎯
         </h2>
         <p className="impact-stat">
-          <strong>MaoClean</strong> é uma 💻 solução digital, materializada como uma plataforma web interativa, criada com o propósito central de promover e facilitar a <strong>gestão sustentável de resíduos sólidos</strong> na cidade de <strong>Manaus</strong>. Sua finalidade é enfrentar o desafio do 🗑️ <strong>descarte inadequado</strong> e da baixa adesão às práticas de ♻️ reciclagem, atuando como um 🔗 <strong>elo</strong> entre os cidadãos, a informação e os recursos de coleta seletiva.
+          <strong>MaoClean</strong> é uma 💻 plataforma web interativa que promove a <strong>gestão sustentável de resíduos sólidos</strong> em <strong>Manaus</strong>. Seu propósito é combater o  <strong>descarte inadequado</strong> e estimular a ♻️ <strong>reciclagem</strong>, conectando cidadãos, informações e recursos de coleta seletiva 🗑️.
         </p>
         <p className="impact-stat">
-          O projeto busca ℹ️ <strong>democratizar o acesso a informações</strong> cruciais sobre a coleta seletiva, incentivar a  <strong>conscientização ambiental</strong> e engajar a população em <strong>práticas de descarte mais responsáveis</strong>. Para os gestores, o <strong>MaoClean</strong> também se propõe a oferecer 🛠️ <strong>ferramentas</strong> que auxiliem no monitoramento e na otimização dos processos de coleta e gestão de resíduos.
+          A iniciativa busca  <strong>democratizar o acesso a informações</strong> sobre coleta, incentivar a <strong>conscientização ambiental</strong> e engajar a população em <strong>práticas de descarte responsáveis</strong>. Para gestores, o <strong>MaoClean</strong> oferece 🛠️ <strong>ferramentas</strong> para monitorar e otimizar a gestão de resíduos.
         </p>
         <p className="impact-stat">
-          O objetivo final do <strong>MaoClean</strong> é contribuir significativamente para a construção de uma <strong>Manaus mais limpa, organizada e ambientalmente consciente</strong>. Ele representa uma iniciativa de 💡 <strong>inovação social</strong> que utiliza a tecnologia como ferramenta para fomentar o <strong>desenvolvimento sustentável urbano</strong>, a segurança dos dados e o <strong>bem-estar da comunidade</strong>.
+          Assim, a <strong>MaoClean</strong> contribui para uma <strong>Manaus mais limpa, organizada e consciente</strong> — uma 💡 <strong>inovação social</strong> que usa tecnologia para fortalecer o <strong>desenvolvimento sustentável</strong> e o <strong>bem-estar da comunidade</strong>.
         </p>
       </div>
-
-
       {/* Carrossel de Imagens */}
       <Slider {...settings}>
         {images.map((src, i) => (
