@@ -28,10 +28,10 @@ function Chatbot() {
 
         try {
             // Prepara o histórico para enviar ao backend
-            // O Gemini espera um formato específico, por isso filtramos a mensagem inicial
+            // espera um formato específico, por isso filtramos a mensagem inicial
             const history = messages.filter(m => m.role !== 'model' || m.parts[0].text.startsWith('Olá!') === false);
 
-            const response = await axios.post('http://localhost:3001/api/chatbot', {
+            const response = await axios.post('http://localhost:3002/api/chatbot', {
                 message: input,
                 history: history
             });
@@ -39,6 +39,7 @@ function Chatbot() {
             const botMessage = { role: 'model', parts: [{ text: response.data.reply }] };
             setMessages(prev => [...prev, botMessage]);
         } catch (error) {
+            console.error('Chatbot error:', error);
             const errorMessage = { role: 'model', parts: [{ text: 'Ops, algo deu errado. Tente novamente.' }] };
             setMessages(prev => [...prev, errorMessage]);
         } finally {

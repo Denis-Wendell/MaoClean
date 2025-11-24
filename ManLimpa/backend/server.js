@@ -11,7 +11,7 @@ const denunciasRoutes = require('./routes/denuncias');
 const tiposResiduoRoutes = require('./routes/tiposResiduo');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 
 // Middleware
 app.use(cors());

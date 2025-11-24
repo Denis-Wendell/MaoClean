@@ -65,7 +65,7 @@ function Chatbot() {
 
         try {
             const history = messages.slice(1);
-            const response = await axios.post('http://localhost:3001/api/chatbot', {
+            const response = await axios.post('http://localhost:3002/api/chatbot', {
                 message: input,
                 history: history
             });

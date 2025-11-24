@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Configuração base do axios
 const api = axios.create({
-  baseURL: 'http://localhost:3001/api', // Ajuste esta porta conforme a configuração do seu servidor backend
+  baseURL: 'http://localhost:3002/api', // Ajuste esta porta conforme a configuração do seu servidor backend
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
