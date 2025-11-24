@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../styles/components/Header.css';
 
@@ -10,12 +10,20 @@ const Header = () => {
     return location.pathname === path ? 'active' : '';
   };
 
+  // Sempre que a rota mudar, fecha o menu mobile
+  useEffect(() => {
+    const checkbox = document.getElementById('menu-toggle');
+    if (checkbox) {
+      checkbox.checked = false;
+    }
+  }, [location.pathname]); // dispara quando a URL muda
+
   return (
     <header className="header">
       <div className="logo">
         <Link to="/">
           <img
-            src="./assets/logo.png"  // ← Use como URL, não import
+            src="./assets/logo.png"
             alt="Logo"
             className="logo-image"
           />
