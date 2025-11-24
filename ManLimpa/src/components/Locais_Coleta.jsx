@@ -39,10 +39,10 @@ const Locais_Coleta = () => {
         <div className="info-dicas">
           <h3>Dicas de Reciclagem:</h3>
           <ul>
-            <li>• Separe corretamente os materiais recicláveis</li>
-            <li>• Lave as embalagens antes de descartar</li>
-            <li>• Compacte garrafas e caixas para ocupar menos espaço</li>
-            <li>• Verifique quais materiais são aceitos em cada ponto de coleta</li>
+            <li>Separe corretamente os materiais recicláveis</li>
+            <li>Lave as embalagens antes de descartar</li>
+            <li>Compacte garrafas e caixas para ocupar menos espaço</li>
+            <li>Verifique quais materiais são aceitos em cada ponto de coleta</li>
           </ul>
      
           <h3>Principais Pontos de Coleta:</h3>
