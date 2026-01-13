@@ -9,6 +9,7 @@ Manaus Limpa é uma iniciativa que visa conscientizar a população de Manaus so
 - React Router
 - Tailwind CSS
 - CSS personalizado
+- LLM OpenAI
 
 ## Pré-requisitos
 Antes de começar, você precisará ter instalado em sua máquina:
